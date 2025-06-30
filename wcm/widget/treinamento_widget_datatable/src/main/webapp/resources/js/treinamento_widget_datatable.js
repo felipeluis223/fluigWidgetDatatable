@@ -130,6 +130,9 @@ var TreinamentoDatatable = SuperWidget.extend({
     	        template: '#area_acao',
     	        actionAreaStyle: 'col-md-6'
     	    },
+    	    draggable: {
+    	    	enabled: true,
+    	    },
     	}, function(err, data) {
     	    // DO SOMETHING (error or success)
     	}).on('fluig.datatable.loadcomplete', function(data) {
