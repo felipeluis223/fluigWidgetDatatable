@@ -132,6 +132,38 @@ var TreinamentoDatatable = SuperWidget.extend({
     	    },
     	}, function(err, data) {
     	    // DO SOMETHING (error or success)
+    	}).on('fluig.datatable.loadcomplete', function(data) {
+    	    // Quando dispara: Assim que a tabela termina de carregar os dados.
+    		console.log('EVENTO: fluig.datatable.loadcomplete');
+    		console.log(data);
+    	}).on('fluig.datatable.onselectrow', function(data) {
+    	    // Quando dispara: Quando o usuário seleciona uma linha na tabela.
+    		console.log('EVENTO: fluig.datatable.onselectrow');
+    		console.log(data);
+    	}).on('fluig.datatable.drag.start', function(data) {
+    	    // Quando dispara: Quando o usuário inicia um arraste (drag) de uma linha.
+    		console.log('EVENTO: fluig.datatable.drag.start');
+    		console.log(data);
+    	}).on('fluig.datatable.drag.end', function(data) {
+    	    // Quando dispara: Quando o usuário finaliza o arraste de uma linha.
+    		console.log('EVENTO: fluig.datatable.drag.end');
+    		console.log(data);
+    	}).on('fluig.datatable.scroll', function(data) {
+    	    // Quando dispara: Ao rolar verticalmente a tabela.
+    		console.log('EVENTO: fluig.datatable.scroll');
+    		console.log(data);
+    	}).on('fluig.datatable.search', function(data) {
+    	    // Quando dispara: Quando o usuário faz uma pesquisa usando o campo de busca da tabela.
+    		console.log('EVENTO: fluig.datatable.search');
+    		console.log(data);
+    	}).on('fluig.datatable.forward', function(data) {
+    	    // Quando dispara: Ao clicar para avançar para a próxima página da tabela (se for paginada).
+    		console.log('EVENTO: fluig.datatable.forward');
+    		console.log(data);
+    	}).on('fluig.datatable.backward', function(data) {
+    	    // Quando dispara: Ao clicar para voltar para a página anterior da tabela.
+    		console.log('EVENTO: fluig.datatable.backward');
+    		console.log(data);
     	});
     }
 
