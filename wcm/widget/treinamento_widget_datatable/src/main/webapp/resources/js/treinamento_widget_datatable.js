@@ -1,8 +1,9 @@
 var TreinamentoDatatable = SuperWidget.extend({
-    //variáveis da widget
+    //variáveis da widget - Variáveis Globais da SuperWidget:
     variavelNumerica: null,
     variavelCaracter: null,
-
+    myTable: null,
+    
     //método iniciado quando a widget é carregada
     init: function() {
     	this.initDatatable();
@@ -85,7 +86,7 @@ var TreinamentoDatatable = SuperWidget.extend({
          
     	];
     	
-    	var myTable = FLUIGC.datatable('#target_datatable_' + this.instanceId, {
+    	this.myTable = FLUIGC.datatable('#target_datatable_' + this.instanceId, {
     	    dataRequest: myData,
     	    renderContent: ['id', 'name', 'uf'],
     	    header: [
