@@ -12,10 +12,39 @@ var TreinamentoDatatable = SuperWidget.extend({
     bindings: {
         local: {
             'execute': ['click_executeAction']
+    			
         },
         global: {}
     },
- 
+    addRow: function(el, ev){
+    	var row = { id: "27", name: "Tocantins", uf: "TO" };
+    	this.myTable.addRow(0, row);
+    },
+    delRow: function(el, ev) {
+    	var itemsToRemove = this.myTable.selectedRows();
+    	if(itemsToRemove.length > 0){
+    		for(var i=0; i<=itemsToRemove.length; i++){
+    			this.myTable.removeRow(this.myTable.selectedRows()[0]);
+    		}
+    	}
+    	
+    	// Configuração - disparo de mensagem:
+    	FLUIGC.toast({
+    		title: '',
+    		message: "Elemento Removido...",
+    		type: "success"
+    	});
+    },
+    selected: function(el, ev){
+    	var index = this.myTable.selectedRows()[0];
+    	var selected = this.myTable.getRow(index);
+    	FLUIGC.toast({
+    		title: "",
+    		message: "{\"id\" :" + selected.id + ", \"name\" :" + selected.name + ", \"uf\" :" + selected.uf + "}",             
+    		type: "success"
+    	});
+    },
+    
     initDatatable: function(){
     	var myData = [
 		 { id: "1", name: "Acre", uf: "AC" },
@@ -44,7 +73,7 @@ var TreinamentoDatatable = SuperWidget.extend({
          { id: "24", name: "Santa Catarina", uf: "SC" },
          { id: "25", name: "São Paulo", uf: "SP" },
          { id: "26", name: "Sergipe", uf: "SE" },
-         { id: "27", name: "Tocantins", uf: "TO" }
+         
     	];
     	
     	var myTable = FLUIGC.datatable('#target_datatable_' + this.instanceId, {

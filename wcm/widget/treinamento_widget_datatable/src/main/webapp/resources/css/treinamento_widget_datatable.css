@@ -1,1 +1,6 @@
 /* Coloque aqui seu codigo CSS */
+.button-container {
+	display: flex;
+	grid-template-columns: repeat(3, ifr);
+	gap: 8px;
+}
