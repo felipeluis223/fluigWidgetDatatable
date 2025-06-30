@@ -11,15 +11,22 @@ var TreinamentoDatatable = SuperWidget.extend({
     //BIND de eventos
     bindings: {
         local: {
-            'execute': ['click_executeAction']
-    			
+        	// 'add-linha/rem-linha/select-linha'-> troca pelo nome função HTML;
+        	// 'click' -> tipo de ação;
+        	// addRow/delRow/selected -> nome da função criada.
+            'add-linha': ['click_addRow'],
+            'rem-linha': ['click_delRow'],
+            'select_linha': ['click_selected']
         },
         global: {}
     },
+    // Função responsável por adicionar item(linha):    
     addRow: function(el, ev){
     	var row = { id: "27", name: "Tocantins", uf: "TO" };
     	this.myTable.addRow(0, row);
     },
+    
+    // Função responsável por remover item(linha):
     delRow: function(el, ev) {
     	var itemsToRemove = this.myTable.selectedRows();
     	if(itemsToRemove.length > 0){
@@ -35,6 +42,8 @@ var TreinamentoDatatable = SuperWidget.extend({
     		type: "success"
     	});
     },
+    
+    // Função responsável por selecionar item(linha):
     selected: function(el, ev){
     	var index = this.myTable.selectedRows()[0];
     	var selected = this.myTable.getRow(index);
