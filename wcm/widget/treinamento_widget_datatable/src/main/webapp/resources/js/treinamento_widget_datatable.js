@@ -17,10 +17,41 @@ var TreinamentoDatatable = SuperWidget.extend({
         	// addRow/delRow/selected -> nome da função criada.
             'add-linha': ['click_addRow'],
             'rem-linha': ['click_delRow'],
-            'select-linha': ['click_selected']
+            'select-linha': ['click_selected'],
+            'edit-linha': ['click_editRow'],
+            'update-linha': ['click_updaterow']
         },
         global: {}
     },
+    // Função responsável por atualizar os dados:
+    updaterow: function(el, ev) {
+    	console.log('clickado...')
+        var editedRow = {
+            name: $('#datatable-input-name').val(),
+            uf: $('#datatable-input-uf').val()
+        };
+        this.myTable.updateRow(this.myTable.selectedRows()[0], editedRow);
+     
+        $('[data-datatable-edit-row]').prop("disabled", false);
+     
+        FLUIGC.toast({
+            title: '',
+            message: "Edited!",
+            type: 'success'
+        });
+    },
+    
+    // Função responsável por editar item(linha):
+    editRow: function(el, ev) {
+        var row = this.myTable.getRow(this.myTable.selectedRows()[0]);
+        this.myTable.updateRow(this.myTable.selectedRows()[0], row, '.template_datatable_edit');
+        $('#datatable-input-name').val(row.name);
+        $('#datatable-input-uf').val(row.uf);
+     
+        $('[data-datatable-edit-row]').prop("disabled", true);
+     
+    },
+    
     // Função responsável por adicionar item(linha):    
     addRow: function(el, ev){
     	var row = { id: "27", name: "Tocantins", uf: "TO" };

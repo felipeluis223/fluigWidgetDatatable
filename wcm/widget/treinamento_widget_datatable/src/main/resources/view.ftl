@@ -20,7 +20,31 @@
 				<i class="flaticon flaticon-check-circle icon-xs" aria-hidden="true"></i>Selecionar
 			</button>
 			
+			<!-- Botão de editar linha -->
+			<button type="button" class="btn btn-warning btn-sm" data-edit-linha>
+				<i class="flaticon flaticon-check-circle icon-xs" aria-hidden="true"></i>Editar
+			</button>	
 	   </div>
 	</script>
+	
+	<script type="text/template" class="template_datatable_edit">
+	    <tr>
+	        <td>
+	           	{{id}}
+	        </td>
+	        <td>
+	            <input type="text" value="{{name}}" id="datatable-input-name">
+	        </td>
+	        <td>
+	            <select class="form-control" value="{{uf}}" id="datatable-input-uf">
+	                <option value="TST">TESTE</option>
+	            </select>
+	        </td>
+	        <td>
+	            <button class="btn btn-default" data-update-linha>Editar</button>
+	        </td>
+	    </tr>
+	</script>
+	
 </div>
 
