@@ -1,4 +1,7 @@
-<div id="TreinamentoDatatable_${instanceId}" class="super-widget wcm-widget-class fluig-style-guide" data-params="TreinamentoDatatable.instance()">
+<!--  -->
+<#assign parametros = "{'prop1': '${orderedData!''}'}">
+
+<div id="TreinamentoDatatable_${instanceId}" class="super-widget wcm-widget-class fluig-style-guide" data-params="TreinamentoDatatable.instance(${parametros?json_string})">
 	<h2>Treinameto Datatable</h2>
 	
 	<div id="target_datatable_${instanceId}"></div>
@@ -46,5 +49,7 @@
 	    </tr>
 	</script>
 	
+	<!-- Salvando os dados do Widgets(backend) no "orderedData" -->
+	${orderedData!''} <!-- Fica uma string parecido com uma hash - devido ao encode -->
 </div>
 
