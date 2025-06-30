@@ -3,7 +3,8 @@ var TreinamentoDatatable = SuperWidget.extend({
     variavelNumerica: null,
     variavelCaracter: null,
     myTable: null,
-    
+    dataInit: null,
+
     //método iniciado quando a widget é carregada
     init: function() {
     	this.initDatatable();
@@ -87,6 +88,8 @@ var TreinamentoDatatable = SuperWidget.extend({
     },
     
     initDatatable: function(){
+	var that = this; // Salvando a referência da SuperWidget.
+
     	var myData = [
 		 { id: "1", name: "Acre", uf: "AC" },
          { id: "2", name: "Alagoas", uf: "AL" },
@@ -116,6 +119,8 @@ var TreinamentoDatatable = SuperWidget.extend({
          { id: "26", name: "Sergipe", uf: "SE" },
          
     	];
+
+		this.dataInit = myData;
     	
     	this.myTable = FLUIGC.datatable('#target_datatable_' + this.instanceId, {
     	    dataRequest: myData,
@@ -135,36 +140,81 @@ var TreinamentoDatatable = SuperWidget.extend({
     	    },
     	}, function(err, data) {
     	    // DO SOMETHING (error or success)
-    	}).on('fluig.datatable.loadcomplete', function(data) {
-    	    // Quando dispara: Assim que a tabela termina de carregar os dados.
+    	})
+		
+		// Quando dispara: Assim que a tabela termina de carregar os dados.
+		.on('fluig.datatable.loadcomplete', function(data) {
     		console.log('EVENTO: fluig.datatable.loadcomplete');
     		console.log(data);
-    	}).on('fluig.datatable.onselectrow', function(data) {
-    	    // Quando dispara: Quando o usuário seleciona uma linha na tabela.
+			
+    	}) 
+		// Quando dispara: Quando o usuário seleciona uma linha na tabela.
+		.on('fluig.datatable.onselectrow', function(data) {
     		console.log('EVENTO: fluig.datatable.onselectrow');
     		console.log(data);
-    	}).on('fluig.datatable.drag.start', function(data) {
-    	    // Quando dispara: Quando o usuário inicia um arraste (drag) de uma linha.
+
+    	}) 
+		// Quando dispara: Quando o usuário inicia um arraste (drag) de uma linha.
+		.on('fluig.datatable.drag.start', function(data) {
     		console.log('EVENTO: fluig.datatable.drag.start');
     		console.log(data);
-    	}).on('fluig.datatable.drag.end', function(data) {
-    	    // Quando dispara: Quando o usuário finaliza o arraste de uma linha.
+
+    	}) 
+		// Quando dispara: Quando o usuário finaliza o arraste de uma linha.
+		.on('fluig.datatable.drag.end', function(data) {
     		console.log('EVENTO: fluig.datatable.drag.end');
-    		console.log(data);
-    	}).on('fluig.datatable.scroll', function(data) {
-    	    // Quando dispara: Ao rolar verticalmente a tabela.
+    		var newPageData = that.myTable.getData();
+			console.log("Dados reorganizados na página atual: ", newPageData);
+
+			// Criar um mapa com os índices dos itens visíveis antes da reordenação:
+			var dataInitMap = that.dataInit.reduce((acc, item, index)=>{
+				acc[item.id] = index; // Mapeia o ID ao índice original
+				return acc;
+			});
+
+			// Encontrar o intervalo correto da página atual dentro de dataInit:
+			var start = that.currentPage * that.pageSize;
+			var end = start + that.pageSize;
+
+			// Substituir a pare da "dataInit" correspondente à página atual pela nova ordem:
+			that.dataInit.splice(start, newPageData.length, ...newPageData);
+			console.log("Dados completos reorganizados: ", that.dataInit);
+
+			// Armazenando informações do widgets:
+			var preferences = {
+				orderedData: encodeURIComponent(JSON.stringify(that.dataInit)) // Salva a lista completa - Utilizando o encodeURI para os caracteres especiais não quebrarem - array.
+			};
+			
+			WCMSpaceAPI.PageService.UPDATEPREFERENCES({
+				async: true,
+				success: function (data) {
+					console.log("Nova ordem salva com sucesso!");
+				},
+				fail: function (xhr, message, errorData) {
+					console.log('Erro ao salvar a ordem: ', message, errorData);
+				}
+			}, this.instanceId, preferences
+			);
+			
+    	}) 
+		// Quando dispara: Ao rolar verticalmente a tabela.
+		.on('fluig.datatable.scroll', function(data) {
     		console.log('EVENTO: fluig.datatable.scroll');
     		console.log(data);
-    	}).on('fluig.datatable.search', function(data) {
-    	    // Quando dispara: Quando o usuário faz uma pesquisa usando o campo de busca da tabela.
+    	}) 
+		// Quando dispara: Quando o usuário faz uma pesquisa usando o campo de busca da tabela.
+		.on('fluig.datatable.search', function(data) {
     		console.log('EVENTO: fluig.datatable.search');
     		console.log(data);
-    	}).on('fluig.datatable.forward', function(data) {
-    	    // Quando dispara: Ao clicar para avançar para a próxima página da tabela (se for paginada).
+    	}) 
+		// Quando dispara: Ao clicar para avançar para a próxima página da tabela (se for paginada).
+		.on('fluig.datatable.forward', function(data) {
     		console.log('EVENTO: fluig.datatable.forward');
     		console.log(data);
-    	}).on('fluig.datatable.backward', function(data) {
-    	    // Quando dispara: Ao clicar para voltar para a página anterior da tabela.
+    	})
+		
+		// Quando dispara: Ao clicar para voltar para a página anterior da tabela.
+		.on('fluig.datatable.backward', function(data) {
     		console.log('EVENTO: fluig.datatable.backward');
     		console.log(data);
     	});
