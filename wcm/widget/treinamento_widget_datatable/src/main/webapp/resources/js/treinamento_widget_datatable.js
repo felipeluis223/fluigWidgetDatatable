@@ -25,8 +25,8 @@ var TreinamentoDatatable = SuperWidget.extend({
     },
     // Função responsável por atualizar os dados:
     updaterow: function(el, ev) {
-    	console.log('clickado...')
         var editedRow = {
+            id: $('#datatable-input-id').val(),
             name: $('#datatable-input-name').val(),
             uf: $('#datatable-input-uf').val()
         };

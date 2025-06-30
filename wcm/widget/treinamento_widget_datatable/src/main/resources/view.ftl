@@ -30,7 +30,7 @@
 	<script type="text/template" class="template_datatable_edit">
 	    <tr>
 	        <td>
-	           	{{id}}
+	            <input type="text" value="{{id}}" id="datatable-input-id">
 	        </td>
 	        <td>
 	            <input type="text" value="{{name}}" id="datatable-input-name">
