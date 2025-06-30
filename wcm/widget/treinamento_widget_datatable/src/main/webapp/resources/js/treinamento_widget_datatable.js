@@ -54,7 +54,12 @@ var TreinamentoDatatable = SuperWidget.extend({
     	        {'title': 'Código'},
     	        {'title': 'Nome'},
     	        {'title': 'UF'}
-    	    ]
+    	    ],
+    	    actions: {
+    	        enabled: true,
+    	        template: '#area_acao',
+    	        actionAreaStyle: 'col-md-6'
+    	    },
     	}, function(err, data) {
     	    // DO SOMETHING (error or success)
     	});
