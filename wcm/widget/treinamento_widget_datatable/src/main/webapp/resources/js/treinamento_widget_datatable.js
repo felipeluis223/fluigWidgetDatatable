@@ -17,7 +17,7 @@ var TreinamentoDatatable = SuperWidget.extend({
         	// addRow/delRow/selected -> nome da função criada.
             'add-linha': ['click_addRow'],
             'rem-linha': ['click_delRow'],
-            'select_linha': ['click_selected']
+            'select-linha': ['click_selected']
         },
         global: {}
     },
